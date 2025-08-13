@@ -1,0 +1,15 @@
+relationship a8d90c01-1b88-3062-fed5-f12eed4ff1e7
+	relyOnReferentialIntegrity
+	fromColumn: FactIncomeStatement.Date
+	toColumn: DimDate.Date
+
+relationship d9296c6d-6a3e-8a33-c0b7-9cacd93d17fd
+	relyOnReferentialIntegrity
+	fromColumn: FactIncomeStatement.CompanyCode
+	toColumn: DimCompany.CompanyCode
+
+relationship f359c9fb-6733-7fdb-3345-616029400159
+	relyOnReferentialIntegrity
+	fromColumn: FactIncomeStatement.AccountCode
+	toColumn: DimAccount.AccountCode
+

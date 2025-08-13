@@ -1,0 +1,34 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/variableLibrary/definition/valueSet/1.0.0/schema.json",
+  "name": "PRD",
+  "variableOverrides": [
+    {
+      "name": "database_name",
+      "value": "IncomeStatement_PRD"
+    },
+    {
+      "name": "end_date",
+      "value": "Current"
+    },
+    {
+      "name": "workspace_id",
+      "value": "b258fff4-6fa1-4092-a69e-ecf2fb296d5f"
+    },
+    {
+      "name": "lakehouse_id",
+      "value": "f1140309-f6ff-4f48-842e-08f0df4aa031"
+    },
+    {
+      "name": "notebook_id",
+      "value": "b8e67875-e376-4f1e-ba13-b235f81fe82f"
+    },
+    {
+      "name": "connection_id",
+      "value": "21605f60-4c47-49ff-bc35-d8941681d9f2"
+    },
+    {
+      "name": "dataflow_id",
+      "value": "1ee2943a-6bcd-432c-b754-9bc38ebd0bf2"
+    }
+  ]
+}

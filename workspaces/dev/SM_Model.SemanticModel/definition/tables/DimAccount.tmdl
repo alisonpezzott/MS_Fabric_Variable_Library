@@ -1,0 +1,116 @@
+table DimAccount
+	lineageTag: c421ec23-b3a8-4aa9-92e3-117ce5146208
+	sourceLineageTag: [dbo].[DimAccount]
+
+	column AccountGroupName
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: c2ea3dc6-f95b-47cd-bb15-6c2dc257c2da
+		sourceLineageTag: AccountGroupName
+		summarizeBy: none
+		sourceColumn: AccountGroupName
+		sortByColumn: AccountGroupCode
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column AccountGroupCode
+		dataType: int64
+		isHidden
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: e324f090-8205-437d-a82e-50c2622aa16e
+		sourceLineageTag: AccountGroupCode
+		summarizeBy: none
+		sourceColumn: AccountGroupCode
+
+		changedProperty = SummarizeBy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column AccountSubgroupName
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d67abf87-d75f-493c-b8d9-42bc91aba816
+		sourceLineageTag: AccountSubgroupName
+		summarizeBy: none
+		sourceColumn: AccountSubgroupName
+		sortByColumn: AccountSubgroupCode
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column AccountSubgroupCode
+		dataType: int64
+		isHidden
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: bcd605b9-013f-4fa4-b6b7-618a424d3aeb
+		sourceLineageTag: AccountSubgroupCode
+		summarizeBy: none
+		sourceColumn: AccountSubgroupCode
+
+		changedProperty = SummarizeBy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column AccountName
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: af7cbaa8-fe2a-47ee-9a25-052823470873
+		sourceLineageTag: AccountName
+		summarizeBy: none
+		sourceColumn: AccountName
+		sortByColumn: AccountCode
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column AccountCode
+		dataType: int64
+		isHidden
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 4237ff19-0e4f-4dc8-8a90-dd42b2a79378
+		sourceLineageTag: AccountCode
+		summarizeBy: none
+		sourceColumn: AccountCode
+
+		changedProperty = SummarizeBy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column IsSubtotal
+		dataType: int64
+		isHidden
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: a1445b7f-ac03-42fd-9fee-ec136307c424
+		sourceLineageTag: IsSubtotal
+		summarizeBy: none
+		sourceColumn: IsSubtotal
+
+		changedProperty = SummarizeBy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	partition DimAccount = entity
+		mode: directLake
+		source
+			entityName: DimAccount
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+
