@@ -118,20 +118,18 @@ RETURN
 
 ```  
 
-Use format string `#,0,,.0;(#,0,,.0);-` for the DAX measure.  
+
+## Variables  
+sql_server  
+database_name  
+connection_id  
+workspace_id  
+lakehouse_id    
+notebook_id    
+start_date  
+end_date  
 
 
-## Variables
-sql_server
-database_name
-connection_id
-workspace_id
-lakehouse_id  
-notebook_id  
-start_date
-end_date
-
-
-Direct Lake semantic models data source rules 
-Server: Lakehouse > Settings > SQL analytics endpoint > SQL connection string  
-Database: Open Lakehouse SQL endpoint > Copy the GUID after `mirroredwarehouses/`  
+Direct Lake semantic models data source rules  
+Server: Lakehouse > Settings > SQL analytics endpoint > SQL connection string    
+Database: Open Lakehouse SQL endpoint > Copy the GUID after `mirroredwarehouses/`    
