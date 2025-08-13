@@ -1,0 +1,34 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/variableLibrary/definition/valueSet/1.0.0/schema.json",
+  "name": "STG",
+  "variableOverrides": [
+    {
+      "name": "database_name",
+      "value": "IncomeStatement_STG"
+    },
+    {
+      "name": "end_date",
+      "value": "2024-12-31"
+    },
+    {
+      "name": "workspace_id",
+      "value": "bd7878ee-2fcb-4af2-a47a-a221a04ebabd"
+    },
+    {
+      "name": "lakehouse_id",
+      "value": "74874010-1741-4366-a3a1-3e03f231c0a5"
+    },
+    {
+      "name": "notebook_id",
+      "value": "054586b7-2a35-460b-a18a-53bd5a00981f"
+    },
+    {
+      "name": "connection_id",
+      "value": "275a86b1-3950-42bf-9309-028ad5b14195"
+    },
+    {
+      "name": "dataflow_id",
+      "value": "4333a3d9-e0bf-474f-aa51-024c432ac332"
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "ForEach1",
+        "type": "ForEach",
+        "dependsOn": [],
+        "typeProperties": {
+          "items": {
+            "value": "@pipeline().parameters.Tables",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "name": "Copy data1",
+              "type": "Copy",
+              "dependsOn": [],
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureOutput": false,
+                "secureInput": false
+              },
+              "typeProperties": {
+                "source": {
+                  "type": "SqlServerSource",
+                  "queryTimeout": "02:00:00",
+                  "partitionOption": "None",
+                  "datasetSettings": {
+                    "annotations": [],
+                    "type": "SqlServerTable",
+                    "schema": [],
+                    "typeProperties": {
+                      "table": {
+                        "value": "@item().source",
+                        "type": "Expression"
+                      },
+                      "database": {
+                        "value": "@pipeline().libraryVariables.database_name",
+                        "type": "Expression"
+                      }
+                    },
+                    "externalReferences": {
+                      "connection": "@pipeline().libraryVariables.connection_id"
+                    }
+                  }
+                },
+                "sink": {
+                  "type": "DelimitedTextSink",
+                  "storeSettings": {
+                    "type": "LakehouseWriteSettings"
+                  },
+                  "formatSettings": {
+                    "type": "DelimitedTextWriteSettings",
+                    "fileExtension": ".txt"
+                  },
+                  "datasetSettings": {
+                    "annotations": [],
+                    "linkedService": {
+                      "name": "ba2715cb_376a_4289_9af6_f8e0412e91b5",
+                      "properties": {
+                        "annotations": [],
+                        "type": "Lakehouse",
+                        "typeProperties": {
+                          "workspaceId": "@pipeline().libraryVariables.workspace_id",
+                          "artifactId": "@pipeline().libraryVariables.lakehouse_id",
+                          "rootFolder": "Files"
+                        }
+                      }
+                    },
+                    "type": "DelimitedText",
+                    "typeProperties": {
+                      "location": {
+                        "type": "LakehouseLocation",
+                        "fileName": {
+                          "value": "@item().target",
+                          "type": "Expression"
+                        },
+                        "folderPath": "Raw"
+                      },
+                      "columnDelimiter": ",",
+                      "escapeChar": "\\",
+                      "firstRowAsHeader": true,
+                      "quoteChar": "\""
+                    },
+                    "schema": []
+                  }
+                },
+                "enableStaging": false,
+                "translator": {
+                  "type": "TabularTranslator",
+                  "typeConversion": true,
+                  "typeConversionSettings": {
+                    "allowDataTruncation": true,
+                    "treatBooleanAsNumber": false
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Dataflow1",
+        "type": "RefreshDataflow",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "dataflowId": {
+            "value": "@pipeline().libraryVariables.dataflow_id",
+            "type": "Expression"
+          },
+          "workspaceId": {
+            "value": "@pipeline().libraryVariables.workspace_id",
+            "type": "Expression"
+          },
+          "notifyOption": "NoNotification",
+          "dataflowType": "DataflowFabric",
+          "parameters": {
+            "StartDate": {
+              "value": {
+                "value": "@pipeline().libraryVariables.start_date",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "EndDate": {
+              "value": {
+                "value": "@pipeline().libraryVariables.end_date",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        }
+      },
+      {
+        "name": "Notebook1",
+        "type": "TridentNotebook",
+        "dependsOn": [
+          {
+            "activity": "ForEach1",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "Dataflow1",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "notebookId": {
+            "value": "@pipeline().libraryVariables.notebook_id",
+            "type": "Expression"
+          },
+          "workspaceId": {
+            "value": "@pipeline().libraryVariables.workspace_id",
+            "type": "Expression"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Tables": {
+        "type": "array",
+        "defaultValue": [
+          {
+            "source": "DimAccount",
+            "target": "DimAccount.csv"
+          },
+          {
+            "source": "DimCompany",
+            "target": "DimCompany.csv"
+          },
+          {
+            "source": "FactIncomeStatement",
+            "target": "FactIncomeStatement.csv"
+          }
+        ]
+      }
+    },
+    "libraryVariables": {
+      "sql_server": {
+        "type": "String",
+        "variableName": "sql_server",
+        "libraryName": "VL_Variables"
+      },
+      "database_name": {
+        "type": "String",
+        "variableName": "database_name",
+        "libraryName": "VL_Variables"
+      },
+      "workspace_id": {
+        "type": "String",
+        "variableName": "workspace_id",
+        "libraryName": "VL_Variables"
+      },
+      "lakehouse_id": {
+        "type": "String",
+        "variableName": "lakehouse_id",
+        "libraryName": "VL_Variables"
+      },
+      "notebook_id": {
+        "type": "String",
+        "variableName": "notebook_id",
+        "libraryName": "VL_Variables"
+      },
+      "start_date": {
+        "type": "String",
+        "variableName": "start_date",
+        "libraryName": "VL_Variables"
+      },
+      "end_date": {
+        "type": "String",
+        "variableName": "end_date",
+        "libraryName": "VL_Variables"
+      },
+      "connection_id": {
+        "type": "String",
+        "variableName": "connection_id",
+        "libraryName": "VL_Variables"
+      },
+      "dataflow_id": {
+        "type": "String",
+        "variableName": "dataflow_id",
+        "libraryName": "VL_Variables"
+      }
+    }
+  }
+}

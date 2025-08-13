@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/variableLibrary/definition/variables/1.0.0/schema.json",
+  "variables": [
+    {
+      "name": "sql_server",
+      "note": "",
+      "type": "String",
+      "value": "pezzott.database.windows.net"
+    },
+    {
+      "name": "database_name",
+      "note": "",
+      "type": "String",
+      "value": "IncomeStatement_DEV"
+    },
+    {
+      "name": "workspace_id",
+      "note": "",
+      "type": "String",
+      "value": "ec20ae45-ea57-4f09-a335-6452672895c5"
+    },
+    {
+      "name": "lakehouse_id",
+      "note": "",
+      "type": "String",
+      "value": "730e4551-45dc-40b7-bc13-3a983f31285b"
+    },
+    {
+      "name": "notebook_id",
+      "note": "",
+      "type": "String",
+      "value": "e5021a81-9638-4686-a3be-f309f209e790"
+    },
+    {
+      "name": "start_date",
+      "note": "",
+      "type": "String",
+      "value": "2023-01-01"
+    },
+    {
+      "name": "end_date",
+      "note": "",
+      "type": "String",
+      "value": "2024-02-28"
+    },
+    {
+      "name": "connection_id",
+      "note": "",
+      "type": "String",
+      "value": "408df62c-8e6c-4fcd-ab48-9a0492065edf"
+    },
+    {
+      "name": "dataflow_id",
+      "note": "",
+      "type": "String",
+      "value": "8a87d664-ab6e-44c9-b8f9-5c07432d48c8"
+    }
+  ]
+}

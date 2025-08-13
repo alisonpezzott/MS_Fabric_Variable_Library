@@ -1,0 +1,107 @@
+table DimDate
+	lineageTag: c1a4031b-2abf-4447-8fac-7812d7c8db99
+	sourceLineageTag: [dbo].[DimDate]
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 94c3050e-b4f5-43b9-be9c-0bace2802514
+		sourceLineageTag: Date
+		summarizeBy: none
+		sourceColumn: Date
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 77d35a17-ca8d-4e6e-bddd-82a903df50af
+		sourceLineageTag: Year
+		summarizeBy: none
+		sourceColumn: Year
+
+		changedProperty = SummarizeBy
+
+		annotation SummarizationSetBy = User
+
+	column YearCurrent
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: db3e1ce8-5cea-4059-9c7e-2514ecf867fa
+		sourceLineageTag: YearCurrent
+		summarizeBy: none
+		sourceColumn: YearCurrent
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 708f480c-f338-47b0-a6a9-d98b1ebf3487
+		sourceLineageTag: Quarter
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		changedProperty = SummarizeBy
+
+		annotation SummarizationSetBy = User
+
+	column Month
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 11b99a2b-377a-436d-b86a-8b152b96c1b5
+		sourceLineageTag: Month
+		summarizeBy: none
+		sourceColumn: Month
+
+		changedProperty = SummarizeBy
+
+		annotation SummarizationSetBy = User
+
+	column MonthName
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 4dbb6e32-dff2-49f7-a5f8-6a011b72ea76
+		sourceLineageTag: MonthName
+		summarizeBy: none
+		sourceColumn: MonthName
+		sortByColumn: Month
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNameShort
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 7772e2ca-d0ad-4abd-95c5-ed2e3d77c426
+		sourceLineageTag: MonthNameShort
+		summarizeBy: none
+		sourceColumn: MonthNameShort
+		sortByColumn: Month
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDate = entity
+		mode: directLake
+		source
+			entityName: DimDate
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+
