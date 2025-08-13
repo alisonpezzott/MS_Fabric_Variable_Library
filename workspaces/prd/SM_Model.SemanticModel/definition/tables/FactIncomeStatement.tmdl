@@ -1,0 +1,121 @@
+table FactIncomeStatement
+	lineageTag: ad67eb0f-b4bb-4ecd-a315-0812e596caa1
+	sourceLineageTag: [dbo].[FactIncomeStatement]
+
+	measure Actual = ```
+			
+			VAR _Default = SUM(FactIncomeStatement[Amount]) 
+			
+			VAR _Acum = 
+			    CALCULATE(
+			        SUM(FactIncomeStatement[Amount]),
+			        DimAccount[AccountCode] <= MAX(DimAccount[AccountCode]),
+			        ALL(DimAccount)
+			    )
+			
+			RETURN
+			
+			    SWITCH(
+			        TRUE(),
+			
+			        -- If Subgroup and Account are the same and is in the scope of account then returns blank.
+			        SELECTEDVALUE(DimAccount[AccountName]) = SELECTEDVALUE(DimAccount[AccountSubgroupName]) 
+			            && ISINSCOPE(DimAccount[AccountName]), 
+			            BLANK(),
+			
+			        -- If is a subtotal group and not is in scope of subgroup then returns the _acum constant.
+			        SELECTEDVALUE(DimAccount[IsSubtotal]) = 1
+			            && NOT ISINSCOPE(DimAccount[AccountSubgroupName]), 
+			            _Acum,
+			
+			        -- Else return the default.
+			        _Default
+			    ) 
+			```
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: f89d7dd4-f184-4ead-8a8e-f6846338985b
+
+		changedProperty = Name
+
+		changedProperty = FormatString
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column CompanyCode
+		dataType: int64
+		isHidden
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: df601cad-11f9-48fa-ad0f-79ae22967afa
+		sourceLineageTag: CompanyCode
+		summarizeBy: none
+		sourceColumn: CompanyCode
+
+		changedProperty = IsHidden
+
+		changedProperty = SummarizeBy
+
+		annotation SummarizationSetBy = User
+
+	column AccountCode
+		dataType: int64
+		isHidden
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 096ae296-71ed-47d4-8dc7-431f8f1fb2da
+		sourceLineageTag: AccountCode
+		summarizeBy: none
+		sourceColumn: AccountCode
+
+		changedProperty = IsHidden
+
+		changedProperty = SummarizeBy
+
+		annotation SummarizationSetBy = User
+
+	column Date
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: b5ab23e8-d879-4b6e-876c-4b7910677333
+		sourceLineageTag: Date
+		summarizeBy: none
+		sourceColumn: Date
+
+		changedProperty = FormatString
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Amount
+		dataType: double
+		isHidden
+		sourceProviderType: float
+		lineageTag: 3b36ece4-a050-4112-8848-84c160173c89
+		sourceLineageTag: Amount
+		summarizeBy: none
+		sourceColumn: Amount
+
+		changedProperty = IsHidden
+
+		changedProperty = SummarizeBy
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition FactIncomeStatement = entity
+		mode: directLake
+		source
+			entityName: FactIncomeStatement
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

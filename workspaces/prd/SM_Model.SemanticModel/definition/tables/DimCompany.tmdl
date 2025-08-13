@@ -1,0 +1,78 @@
+table DimCompany
+	lineageTag: a9f99aae-0c8d-4709-85d4-23e737886746
+	sourceLineageTag: [dbo].[DimCompany]
+
+	column CompanyName
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 38ebf50d-09b8-4136-83b6-f5ca7f0ff758
+		sourceLineageTag: CompanyName
+		summarizeBy: none
+		sourceColumn: CompanyName
+
+		annotation SummarizationSetBy = Automatic
+
+	column CompanyCode
+		dataType: int64
+		isHidden
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 6d19de6f-195b-4bb9-9c48-fca5453adf5a
+		sourceLineageTag: CompanyCode
+		summarizeBy: none
+		sourceColumn: CompanyCode
+
+		changedProperty = SummarizeBy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column Country
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 5adc4f64-39e2-4a8b-b1b8-6ec8666ddfb9
+		sourceLineageTag: Country
+		dataCategory: Country
+		summarizeBy: none
+		sourceColumn: Country
+
+		changedProperty = DataCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 2a497935-eef1-4f27-bb9a-3c687ecea297
+		sourceLineageTag: State
+		dataCategory: StateOrProvince
+		summarizeBy: none
+		sourceColumn: State
+
+		changedProperty = DataCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 615a6450-20b1-4feb-a4ea-474157f256de
+		sourceLineageTag: City
+		dataCategory: City
+		summarizeBy: none
+		sourceColumn: City
+
+		changedProperty = DataCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimCompany = entity
+		mode: directLake
+		source
+			entityName: DimCompany
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+
